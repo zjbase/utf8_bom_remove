@@ -31,7 +31,7 @@ function checkBOM ($filename) {
 		$charset[2] = substr($contents, 1, 1);
 		$charset[3] = substr($contents, 2, 1);
 		if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
-			if ($auto == 1) {
+			 
 			$rest = substr($contents, 3);
 				if(isset($_GET['w'])){
 					rewrite ($filename, $rest);
@@ -39,9 +39,7 @@ function checkBOM ($filename) {
 				}else{
 					return ("<font color=red>BOM found, NOT automatically removed.</font>");
 				}
-			} else {
-				return ("<font color=red>BOM found.</font>");
-			}
+			 
 		}else {return ("BOM Not Found.");}
 	}else{
 		return ("not php file");
