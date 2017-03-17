@@ -46,8 +46,6 @@ function checkdir($basedir,$erasebom=false){
 
 echo "<br/> all done , total counter is " . $counter;
 function checkBOM ($filename) {
-	 
-	 
 	if(substr($filename,-3)=='php'){
 		$contents = file_get_contents($filename);
 		$charset[1] = substr($contents, 0, 1);
@@ -63,8 +61,7 @@ function checkBOM ($filename) {
 	}
 }
 function rewrite ($filename) {
-	echo $filename;
-	$data = substr(file_get_contents($filename),3);
+    $data = substr(file_get_contents($filename),3);
     $filenum = fopen($filename, "w");
     flock($filenum, LOCK_EX);
     fwrite($filenum, $data);
