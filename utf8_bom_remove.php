@@ -15,27 +15,23 @@ if(isset($_GET['w']) && $_GET['w']==1)
 
 
 function checkdir($basedir,$erasebom=false){
-
  	global $counter;
 	if ($dh = opendir($basedir)) {
 		while (($file = readdir($dh)) !== false) {
 			if ($file != '.' && $file != '..'){
-				 
-				if (!is_dir($basedir.DIRECTORY_SEPARATOR.$file)) {
-					 
-					$checkbom_r = checkBOM($basedir.DIRECTORY_SEPARATOR . $file);
+				$dirname = $basedir. DIRECTORY_SEPARATOR . $file; 
+				if (!is_dir($dirname)) {
+					$checkbom_r = checkBOM($dirname);
 					if($checkbom_r==0) {
 						$counter++;
 						if($erasebom){
- 							rewrite ($basedir. DIRECTORY_SEPARATOR .$file);
-							echo $basedir . DIRECTORY_SEPARATOR . $file  . " bom found , erase bom ok <br/> " . PHP_EOL;
+ 							rewrite ($dirname);
+							echo $dirname  . " bom found , erase bom ok <br/> " . PHP_EOL;
 						}else{
-							echo $basedir . DIRECTORY_SEPARATOR . $file  . " bom found <br/> ". PHP_EOL ;	
+							echo $dirname  . " bom found <br/> ". PHP_EOL ;	
 						}
-					}
-					
+					}		
 				}else{
-					$dirname = $basedir. DIRECTORY_SEPARATOR .$file;
 					checkdir($dirname,$erasebom);
 				}
 			}
