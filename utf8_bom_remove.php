@@ -25,8 +25,7 @@ function checkdir($basedir,$erasebom=false){
 					if($checkbom_r==0) {
 						$counter++;
 						if($erasebom){
- 							rewrite ($dirname);
-							echo $dirname  . " bom found , erase bom ok <br/> " . PHP_EOL;
+							echo $dirname  . " bom found ,". rewrite($dirname) . " <br/> " . PHP_EOL;                        
 						}else{
 							echo $dirname  . " bom found <br/> ". PHP_EOL ;	
 						}
@@ -58,8 +57,14 @@ function checkBOM ($filename) {
 }
 function rewrite ($filename) {
     $data = substr(file_get_contents($filename),3);
-    $filenum = fopen($filename, "w");
-    flock($filenum, LOCK_EX);
-    fwrite($filenum, $data);
-    fclose($filenum);
+    $filenum = @fopen($filename, "w");
+    if($filenum){
+        @flock($filenum, LOCK_EX);
+        @fwrite($filenum, $data);
+        fclose($filenum);
+        return "OK";
+    }else{
+        return "ERROR"; 
+    }
+    
 }
